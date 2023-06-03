@@ -28,7 +28,8 @@ public class GameWindowController {
 
     @FXML
     private Button addCardButton;
-    private Button AddCardButton2;
+
+    private Button addCardButton2;
 
     @FXML
     private GridPane deskAttackCardPane;
@@ -64,7 +65,7 @@ public class GameWindowController {
     	firstPlayerScroll = new ScrollPane();
     	firstPlayerScroll.setContent(firstPlayerPane);
     }
-
+    @FXML
     void addCardtoSecond(ActionEvent event) throws IOException, InterruptedException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("Card.fxml"));
