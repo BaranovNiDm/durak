@@ -15,15 +15,7 @@ import java.util.Random;
 import java.util.Set;
 
 public class GameWindowController {
-    public static void main(String args) {
-        Set<Integer> numbers = new HashSet<Integer>();
-        Random random = new Random();
 
-        while (numbers.size() < 36) {
-            int num = random.nextInt(36) + 1;
-            numbers.add(num);
-        }
-    }
 
 
     @FXML
@@ -49,37 +41,63 @@ public class GameWindowController {
     @FXML
     private FlowPane secondPlayerPane;
 
+    class RandomArray {
+        public static int[] getRandomArray() {
+            int[] nums = new int[36];
+            for (int i = 0; i < nums.length; i++) {
+                nums[i] = i + 1;
+            }
+
+            Random random = new Random();
+            for (int i = 0; i < nums.length; i++) {
+                int j = random.nextInt(nums.length);
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+            return nums;
+        }
+    }
+
     @FXML
     void addCardtoFirst(ActionEvent event) throws IOException, InterruptedException {
-    	FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("Card.fxml"));
-        
-    	Pane newPane = (Pane)loader.load();
-    	
-    	CardController cardController = loader.getController();
+    	for(int a=0;a<6;a++) {
+            FXMLLoader loader = new FXMLLoader();
 
-    	cardController.setCardParameters("6", "bubi", this, newPane);
+            loader.setLocation(getClass().getResource("Card.fxml"));
 
-    	firstPlayerPane.getChildren().add(newPane);
+            Pane newPane = (Pane) loader.load();
 
-    	firstPlayerScroll = new ScrollPane();
-    	firstPlayerScroll.setContent(firstPlayerPane);
+            CardController cardController = loader.getController();
+
+            CardPicking.CardPicker.getNextCard();
+
+            cardController.setCardParameters("6", "bubi", this, newPane, true);
+
+            firstPlayerPane.getChildren().add(newPane);
+
+            firstPlayerScroll = new ScrollPane();
+            firstPlayerScroll.setContent(firstPlayerPane);
+        }
     }
+
     @FXML
     void addCardtoSecond(ActionEvent event) throws IOException, InterruptedException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("Card.fxml"));
+        for(int a=0;a<6;a++) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("Card.fxml"));
 
-        Pane newPane = (Pane)loader.load();
+            Pane newPane = (Pane) loader.load();
 
-        CardController cardController = loader.getController();
+            CardController cardController = loader.getController();
 
-        cardController.setCardParameters("6", "bubi", this, newPane);
+            cardController.setCardParameters("6", "bubi", this, newPane, false);
 
-        secondPlayerPane.getChildren().add(newPane);
+            secondPlayerPane.getChildren().add(newPane);
 
-        secondPlayerScroll = new ScrollPane();
-        secondPlayerScroll.setContent(secondPlayerPane);
+            secondPlayerScroll = new ScrollPane();
+            secondPlayerScroll.setContent(secondPlayerPane);
+        }
     }
 
     public void addCardOnTable(CardController card) throws IOException {
@@ -89,8 +107,14 @@ public class GameWindowController {
     	Pane newPane = (Pane)loader.load();
     	
     	CardController cardController = loader.getController();
-    	cardController.setCardParameters(card.getNominal(), card.getMask(), this, newPane);
-    	
-    	deskAttackCardPane.add(newPane, deskAttackCardPane.getChildren().size(), 0);
+        if (card.yourside==true) {
+            cardController.setCardParameters(card.getNominal(), card.getMask(), this, newPane, true);
+
+            deskAttackCardPane.add(newPane, deskAttackCardPane.getChildren().size(), 0);
+        }else{
+            cardController.setCardParameters(card.getNominal(), card.getMask(), this, newPane, true);
+
+            deskAnswerCardPane.add(newPane, deskAnswerCardPane.getChildren().size(), 0);
+        }
     }
 }

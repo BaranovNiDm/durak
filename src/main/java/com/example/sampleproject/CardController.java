@@ -21,6 +21,8 @@ public class CardController {
     @FXML
     private Text nominal;
 
+    private int index=0;
+
     @FXML
     private Text mask;
 
@@ -30,14 +32,26 @@ public class CardController {
     @FXML
     private Pane imgPane;
 
+    boolean yourside;
+
+
+
    // @FXML
    // private Text smth;
+    public int get_index(){
+        return index;
+    }
 
-    public void setCardParameters(String nominal, String mask, GameWindowController gameWindow, Pane cardPane) throws FileNotFoundException {
+    public void set_index(int previousIndex){
+        index=previousIndex+1;
+    }
+    public void setCardParameters(String nominal, String mask, GameWindowController gameWindow, Pane cardPane, boolean yourside) throws FileNotFoundException {
     	this.nominal.setText(nominal);
     	this.mask.setText(mask);
     	this.gameWindow = gameWindow;
     	this.cardPane = cardPane;
+        this.yourside=yourside;
+
 
         //File img = new File("C:\\Users\\Boris\\eclipse-workspace\\Durak_0.1\\img\\EntrancePicture.jpg");
     	//InputStream isImage = (InputStream) new FileInputStream(img);
