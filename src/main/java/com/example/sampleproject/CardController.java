@@ -21,6 +21,8 @@ public class CardController {
     @FXML
     private Text nominal;
 
+    private int index=0;
+
     @FXML
     private Text mask;
 
@@ -30,16 +32,28 @@ public class CardController {
     @FXML
     private Pane imgPane;
 
+    boolean yourside;
+
+
+
    // @FXML
    // private Text smth;
+    public int get_index(){
+        return index;
+    }
 
-    public void setCardParameters(String nominal, String mask, GameWindowController gameWindow, Pane cardPane) throws FileNotFoundException {
+    public void set_index(int previousIndex){
+        index=previousIndex+1;
+    }
+    public void setCardParameters(String nominal, String mask, GameWindowController gameWindow, Pane cardPane, boolean yourside) throws FileNotFoundException {
     	this.nominal.setText(nominal);
     	this.mask.setText(mask);
     	this.gameWindow = gameWindow;
     	this.cardPane = cardPane;
+        this.yourside=yourside;
 
-        //File img = new File("C:\\Users\\Boris\\eclipse-workspace\\Durak_0.1\\img\\EntrancePicture.jpg");
+
+        //File img = new File("\"C:\\Users\\Никитос\\Downloads\\1644988405_37-kartinkin-net-p-karti-igralnie-kartinki-42.jpg\"");
     	//InputStream isImage = (InputStream) new FileInputStream(img);
     	//imgBuffer = new ImageView(new Image(isImage));
     	//imgBuffer.setFitWidth(100);
@@ -48,7 +62,7 @@ public class CardController {
     	//cardPane.getChildren().add(imgBuffer);
     	
     	//imgPane = new Pane();
-    	imgPane.getChildren().setAll(imgBuffer);
+    	//imgPane.getChildren().setAll(imgBuffer);
     	
     }
     
